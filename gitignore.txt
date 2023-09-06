@@ -1,0 +1,20 @@
+# Ignore Unity files:
+Temp/
+Library/
+Logs/
+
+# my personal build folder:
+build/ 
+
+# Ignore Visual Studio files:
+ExportedObj/
+obj/
+*.svd
+*.userprefs
+/*.csproj
+*.pidb
+*.suo
+/*.sln
+*.user
+*.unityproj
+*.booproj
