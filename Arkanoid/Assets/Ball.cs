@@ -7,6 +7,7 @@ public class Ball : MonoBehaviour
     private Rigidbody2D rb2d;
     private KeyCode start = KeyCode.Space;
     private float speed = 7f;
+    private Vector2 inicial;
 
     void OnCollisionEnter2D (Collision2D coll) {
     	if(coll.collider.CompareTag("Player")){
@@ -23,11 +24,9 @@ public class Ball : MonoBehaviour
 
     void ResetBall(){
     	rb2d.velocity = Vector2.zero;
-    	transform.position = Vector2.zero;
-    }
-
-    void RestartGame(){
-    	ResetBall();
+        inicial.x = 0;
+        inicial.y = -3.5f; 
+    	transform.position = inicial;
     }
 
     // Start is called before the first frame update

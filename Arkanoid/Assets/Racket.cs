@@ -9,7 +9,16 @@ public class Racket : MonoBehaviour
     public KeyCode moveLeft = KeyCode.LeftArrow;
     public float speed = 5.0f;
     public float boundX = 4.15f;
+    private Vector2 inicial;
 
+
+    void RestartGame(){
+    	rb2d.velocity = Vector2.zero;
+        inicial.x = 0;
+        inicial.y = -4f; 
+    	transform.position = inicial;
+    }
+	
     // Start is called before the first frame update
     void Start()
     {

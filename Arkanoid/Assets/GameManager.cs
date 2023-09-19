@@ -1,25 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GameController : MonoBehaviour
+public class GameManager: MonoBehaviour
 {
     public GUISkin layout;
     public static int PlayerScore = 0;
     public static int Vidas = 5;
     GameObject ball;
+    private KeyCode start = KeyCode.I;
+
 
     void OnGUI () {
         GUI.skin = layout;
-        GUI.Label(new Rect(Screen.width / 2 - 150 - 12, 20, 100, 100), "" + PlayerScore);
-        GUI.Label(new Rect(Screen.width / 2 + 150 + 12, 20, 100, 100), "" + Vidas);
+        Scene scene = SceneManager.GetActiveScene();
 
-        if (GUI.Button(new Rect(Screen.width / 2 - 60, 35, 120, 53), "RESTART"))
-        {
-            PlayerScore = 0;
-            Vidas = 5;
-            ball.SendMessage("RestartGame", 0.5f, SendMessageOptions.RequireReceiver);
+        if(scene.name == "Start"){
+            GUI.Label(new Rect(0, 0, 100, 100), "Pressione a tecla 'i' para iniciar o jogo");
         }
+
+        if(scene.name == "Game"){
+            GUI.Label(new Rect(Screen.width / 2 - 180, 20, 100, 100), "Score: " + PlayerScore);
+            GUI.Label(new Rect(Screen.width / 2 - 180, 5, 100, 100), "Vidas: " + Vidas);
+        }
+        
+    }
+
+    public static void Score(){
+        PlayerScore++;
+    }
+
+    public static void PerderVida(){
+        Vidas--;
+    }
+
+    void EndGame(){
+        //Confere se a pontuação é maior ou igual que a quantidade de blocos
+        if(PlayerScore >= 14 * 5)
+            SceneManager.LoadScene("Win");
+        
+        if(Vidas <= 0)
+            SceneManager.LoadScene("Lose");
     }
 
     // Start is called before the first frame update
@@ -31,6 +53,15 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Scene scene = SceneManager.GetActiveScene();
+           // Check if the name of the current Active Scene is your first Scene.
+        if (scene.name == "Start")
+        {
+            if(Input.GetKey(start))
+                SceneManager.LoadScene("Game");
+        }
+        if (scene.name == "Game"){
+            EndGame();
+        }
     }
 }
