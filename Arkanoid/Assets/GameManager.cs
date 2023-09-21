@@ -16,10 +16,6 @@ public class GameManager: MonoBehaviour
         GUI.skin = layout;
         Scene scene = SceneManager.GetActiveScene();
 
-        if(scene.name == "Start"){
-            GUI.Label(new Rect(0, 0, 100, 100), "Pressione a tecla 'i' para iniciar o jogo");
-        }
-
         if(scene.name == "Game"){
             GUI.Label(new Rect(Screen.width / 2 - 180, 20, 100, 100), "Score: " + PlayerScore);
             GUI.Label(new Rect(Screen.width / 2 - 180, 5, 100, 100), "Vidas: " + Vidas);
