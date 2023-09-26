@@ -1,27 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager: MonoBehaviour
 {
-    public GUISkin layout;
     public static int PlayerScore = 0;
     public static int Vidas = 5;
     GameObject ball;
     private KeyCode start = KeyCode.I;
 
-
-    void OnGUI () {
-        GUI.skin = layout;
-        Scene scene = SceneManager.GetActiveScene();
-
-        if(scene.name == "Game"){
-            GUI.Label(new Rect(Screen.width / 2 - 180, 20, 100, 100), "Score: " + PlayerScore);
-            GUI.Label(new Rect(Screen.width / 2 - 180, 5, 100, 100), "Vidas: " + Vidas);
-        }
-        
-    }
 
     public static void Score(){
         PlayerScore++;
@@ -31,9 +21,19 @@ public class GameManager: MonoBehaviour
         Vidas--;
     }
 
-    void EndGame(){
+    public void MudaFase(){
         //Confere se a pontuação é maior ou igual que a quantidade de blocos
-        if(PlayerScore >= 14 * 5)
+        if(PlayerScore >= 45){
+            SceneManager.LoadScene("Fase2");
+            ball.gameObject.SendMessage("ResetBall", 1.0f, SendMessageOptions.RequireReceiver);
+        }
+            
+        if(Vidas <= 0)
+            SceneManager.LoadScene("Lose");
+    }
+    void EndGame(){
+        //Pontos da fase 1 + pontos da fase 2
+        if(PlayerScore >= 45 + (14 * 5) )
             SceneManager.LoadScene("Win");
         
         if(Vidas <= 0)
@@ -54,9 +54,12 @@ public class GameManager: MonoBehaviour
         if (scene.name == "Start")
         {
             if(Input.GetKey(start))
-                SceneManager.LoadScene("Game");
+                SceneManager.LoadScene("Fase1");
         }
-        if (scene.name == "Game"){
+        if (scene.name == "Fase1"){
+            MudaFase();
+        }
+        if (scene.name == "Fase2"){
             EndGame();
         }
     }

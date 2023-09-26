@@ -60,6 +60,7 @@
     <Compile Include="Assets\Ball.cs" />
     <Compile Include="Assets\Ground.cs" />
     <Compile Include="Assets\GameManager.cs" />
+    <Compile Include="Assets\TextUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

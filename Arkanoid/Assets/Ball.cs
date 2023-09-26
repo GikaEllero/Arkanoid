@@ -6,8 +6,10 @@ public class Ball : MonoBehaviour
 {
     private Rigidbody2D rb2d;
     private KeyCode start = KeyCode.Space;
-    private float speed = 7f;
+    private float speed = 5f;
     private Vector2 inicial;
+
+    private bool restart = true;
 
     void OnCollisionEnter2D (Collision2D coll) {
     	if(coll.collider.CompareTag("Player")){
@@ -20,13 +22,16 @@ public class Ball : MonoBehaviour
             //velocidade da bola        
             rb2d.velocity = vel * speed;          
     	}
+
+        GetComponent<AudioSource>().Play();
     }
 
-    void ResetBall(){
+    public void ResetBall(){
     	rb2d.velocity = Vector2.zero;
         inicial.x = 0;
         inicial.y = -3.5f; 
     	transform.position = inicial;
+        restart = true;
     }
 
     // Start is called before the first frame update
@@ -38,8 +43,9 @@ public class Ball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(start)){
+        if(restart && Input.GetKey(start)){
             rb2d.velocity = Vector2.up * speed;
+            restart = false;
         }
     }
 }
